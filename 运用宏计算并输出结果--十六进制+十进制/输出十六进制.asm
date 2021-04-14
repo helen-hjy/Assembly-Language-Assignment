@@ -1,0 +1,42 @@
+DATA SEGMENT
+     VAR DW 38
+DATA ENDS
+
+CODE SEGMENT
+    ASSUME DS:DATA,CS:CODE
+
+
+START:
+   MOV AX,DATA
+   MOV DS,AX
+   MOV AX,VAR
+   CALL DISP_AX
+   MOV AH,4CH
+   INT 21H
+DISP_AX:
+    MOV BX,16
+    MOV CX,4
+    
+  ABC:
+   CWD
+   DIV BX
+   PUSH DX
+   LOOP ABC
+  
+   MOV CX,4
+  SHOW:
+    POP DX
+    CMP DL,10
+    JB A48
+    ADD DL,7
+  A48:
+    ADD DL,48
+    MOV AH,2
+    INT 21H
+    LOOP SHOW
+
+  RET
+
+ CODE ENDS  
+      END START
+    
